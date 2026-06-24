@@ -1,4 +1,4 @@
-# KnowledgeBase-RAG-LLM-System
+﻿# KnowledgeBase-RAG-LLM-System
 
 ## 基于 **Streamlit** 的个人商家知识库 RAG 智能客服系统
 
@@ -39,19 +39,19 @@
 ## 📸 功能截图
 
 ### 商品管理
-![商品管理](images/商品管理.png)
+![商品管理](https://github.com/huasheng6543/KnowledgeBase-RAG-LLM-System-master/raw/main/images/商品管理.png)
 
 ### 知识库上传
-![知识库上传](images/知识库上传.png)
+![知识库上传](https://github.com/huasheng6543/KnowledgeBase-RAG-LLM-System-master/raw/main/images/知识库上传.png)
 
 ### 尺码推荐问答
-![尺码推荐问答](images/尺码推荐问答.png)
+![尺码推荐问答](https://github.com/huasheng6543/KnowledgeBase-RAG-LLM-System-master/raw/main/images/尺码推荐问答.png)
 
 ### 颜色推荐问答
-![颜色推荐问答](images/颜色推荐问答.png)
+![颜色推荐问答](https://github.com/huasheng6543/KnowledgeBase-RAG-LLM-System-master/raw/main/images/颜色推荐问答.png)
 
 ### 咨询链接生成
-![咨询链接](images/咨询链接.png)
+![咨询链接](https://github.com/huasheng6543/KnowledgeBase-RAG-LLM-System-master/raw/main/images/咨询链接.png)
 
 ---
 
