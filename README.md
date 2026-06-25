@@ -1,259 +1,223 @@
-﻿# KnowledgeBase-RAG-LLM-System
+# KnowledgeBase-RAG-LLM-System
 
-## 基于 **Streamlit** 的个人商家知识库 RAG 智能客服系统
+## Personal Merchant Knowledge Base RAG Intelligent Customer Service System
 
-专为个人商家打造的 AI 智能客服解决方案，支持多商家、多商品独立知识库管理，可快速对接淘宝/抖音/拼多多等平台。
+Built on **Streamlit**, this is an AI intelligent customer service solution designed specifically for personal merchants. It supports multi-merchant and multi-product independent knowledge base management, and can quickly integrate with platforms like Taobao, Douyin, and Pinduoduo.
 
-- 多商家、多商品独立知识库，数据隔离
-- 网页端上传 TXT 文件，自动切分后写入 Chroma 向量库（MD5 去重）
-- 智能客服聊天界面，基于知识库内容进行检索增强回答（RAG）
-- 支持会话历史查看，流式思维链输出
-- 生成买家咨询链接，可挂到淘宝/抖音/拼多多商品页面
-- 修改日志自动记录，方便回溯问题
+### Core Features
+- Multi-merchant, multi-product independent knowledge base with data isolation
+- Web-based TXT file upload, automatic text splitting, and storage into Chroma vector database (MD5 deduplication)
+- Intelligent customer service chat interface with RAG-based retrieval-augmented answering
+- Session history viewing and streaming thinking chain output
+- Buyer consultation link generation for Taobao/Douyin/Pinduoduo product pages
+- Automatic modification log recording for problem tracing
 
-**技术栈**：Python / Streamlit / LangChain / Chroma / DashScope Embeddings / Qwen ChatModel
-
----
-
-## ✨ 功能一览
-
-### 🏪 商家管理后台
-- 创建/编辑/删除商家，每个商家数据独立隔离
-- 添加/编辑/删除商品，为不同商品建立独立知识库
-- 上传知识文件（TXT）或直接粘贴文本到知识库
-- 为每个商品生成独立的买家咨询链接
-- 查看所有操作的修改日志
-
-### 💬 买家咨询页面
-- 智能问答，基于知识库内容回答商品相关问题
-- 多轮对话支持，上下文理解
-- 流式输出，打字机效果
-- 移动端友好，扫码即可咨询
-
-### 🔌 API 接口
-- RESTful API 接口，支持对接千牛/抖音等系统
-- 自动生成接口文档（Swagger UI）
+### Technology Stack
+- **Language**: Python 3.10+
+- **Frontend Framework**: Streamlit
+- **LLM Framework**: LangChain
+- **Vector Database**: ChromaDB
+- **Embedding Model**: DashScope Text Embedding v4
+- **Chat Model**: Qwen3-Max
+- **API Framework**: FastAPI
+- **Database**: SQLite (built-in with Chroma)
 
 ---
 
-## 📸 功能截图
+## ✨ Features Overview
 
-### 商品管理
-![商品管理](https://github.com/huasheng6543/KnowledgeBase-RAG-LLM-System-master/raw/main/images/商品管理.png)
+### 🏪 Merchant Management Dashboard
+- Create/edit/delete merchants with data isolation
+- Add/edit/delete products with independent knowledge bases
+- Upload knowledge files (TXT) or paste text directly
+- Generate unique consultation links for each product
+- View modification logs
 
-### 知识库上传
-![知识库上传](https://github.com/huasheng6543/KnowledgeBase-RAG-LLM-System-master/raw/main/images/知识库上传.png)
+### 💬 Buyer Consultation Page
+- Intelligent Q&A based on knowledge base content
+- Multi-turn conversation support with context understanding
+- Streaming output with typewriter effect
+- Mobile-friendly design, scan to consult
 
-### 尺码推荐问答
-![尺码推荐问答](https://github.com/huasheng6543/KnowledgeBase-RAG-LLM-System-master/raw/main/images/尺码推荐问答.png)
-
-### 颜色推荐问答
-![颜色推荐问答](https://github.com/huasheng6543/KnowledgeBase-RAG-LLM-System-master/raw/main/images/颜色推荐问答.png)
-
-### 咨询链接生成
-![咨询链接](https://github.com/huasheng6543/KnowledgeBase-RAG-LLM-System-master/raw/main/images/咨询链接.png)
+### 🔌 API Interface
+- RESTful API for integrating with Qianniu/Douyin systems
+- Auto-generated Swagger UI documentation
 
 ---
 
-## 🧩 项目结构
+## 📁 Project Structure
 
 ```text
 KnowledgeBase-RAG-LLM-System/
-├─ app_admin.py               # 商家管理后台（Streamlit）
-├─ app_buyer.py               # 买家咨询页面（Streamlit）
-├─ app_chat.py                # 原有智能客服（保留）
-├─ app_upload.py              # 原有知识库上传（保留）
-├─ api_server.py              # FastAPI 接口服务
-├─ init_project.py            # 项目初始化脚本
-├─ merchant_manager.py        # 商家/商品管理模块
-├─ merchant_kb.py             # 多商家隔离的知识库服务
-├─ knowledge_base.py          # 知识库处理：读取、切分、写库、去重
-├─ rag.py                     # RAG 链组装
-├─ vector_stores.py           # 向量库检索封装（持久化）
-├─ file_history_store.py      # 会话历史存储
-├─ log_manager.py             # 修改日志记录模块
-├─ config_data.py             # 模型、路径、chunk 等参数配置
-├─ requirements.txt           # 项目依赖
-├─ assets/                    # 示例知识库文件
-│   ├─ 示例知识库_常见问题.txt
-│   ├─ 尺码推荐.txt
-│   ├─ 洗涤养护.txt
-│   └─ 颜色推荐.txt
-├─ images/                    # 功能截图
-├─ merchants/                 # 商家数据目录（自动生成）
-│   ├─ index.json             # 商家索引
-│   └─ m_xxx/                 # 商家专属目录
-│       └─ knowledge_base/    # 向量库
-├─ logs/                      # 修改日志目录
-└─ chroma_db/                 # 原有向量库（保留）
+├── app_admin.py              # Merchant management dashboard (Streamlit)
+├── app_buyer.py              # Buyer consultation page (Streamlit)
+├── app_chat.py               # Legacy chat interface (kept for compatibility)
+├── app_upload.py             # Legacy upload service (kept for compatibility)
+├── api_server.py             # FastAPI interface service
+├── init_project.py           # Project initialization script
+├── merchant_manager.py       # Merchant/product management module
+├── merchant_kb.py            # Multi-merchant isolated knowledge base service
+├── knowledge_base.py         # Knowledge base processing: read, split, store, deduplicate
+├── rag.py                    # RAG chain assembly
+├── vector_stores.py          # Vector database retrieval wrapper (persistent)
+├── file_history_store.py     # Session history storage
+├── log_manager.py            # Modification log recording module
+├── config_data.py            # Model, path, chunk parameter configuration
+├── requirements.txt          # Project dependencies
+├── assets/                   # Sample knowledge base files
+│   ├── sample_knowledge_faq.txt
+│   ├── size_recommendation.txt
+│   ├── washing_care.txt
+│   └── color_recommendation.txt
+├── images/                   # Feature screenshots
+├── merchants/                # Merchant data directory (auto-generated)
+│   ├── index.json            # Merchant index
+│   └── m_xxx/                # Merchant-specific directory
+│       └── knowledge_base/   # Chroma vector database
+├── logs/                     # Modification logs directory
+└── chroma_db/                # Legacy vector database (kept for compatibility)
 ```
 
 ---
 
-## ✅ 环境准备
+## 🚀 Quick Start
 
-### 1) 安装依赖
+### Prerequisites
+1. Python 3.10+ installed
+2. DashScope API Key (from Alibaba Cloud)
+
+### Installation
 ```bash
+# Clone repository
+git clone https://github.com/huasheng6543/KnowledgeBase-RAG-LLM-System-master.git
+cd KnowledgeBase-RAG-LLM-System-master
+
+# Install dependencies
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
-### 2) 配置 API Key
+### Configuration
 ```bash
 # Windows PowerShell
-$env:DASHSCOPE_API_KEY = "你的阿里云API Key"
+$env:DASHSCOPE_API_KEY = "your_api_key_here"
 
 # Linux/Mac
-export DASHSCOPE_API_KEY="你的阿里云API Key"
+export DASHSCOPE_API_KEY="your_api_key_here"
 ```
 
----
-
-## ⚙️ 配置说明
-
-在 `config_data.py` 中配置：
-
-| 配置项 | 默认值 | 说明 |
-|--------|--------|------|
-| `base_url` | http://localhost:8501 | 商家管理后台地址 |
-| `buyer_base_url` | http://localhost:8502 | 买家咨询页面地址 |
-| `chunk_size` | 1000 | 文本切分大小 |
-| `chunk_overlap` | 100 | 相邻片段重叠字数 |
-| `similarity_threshold` | 1 | 检索返回文档数量 |
-| `embedding_model_name` | text-embedding-v4 | 嵌入模型 |
-| `chat_model_name` | qwen3-max | 聊天模型 |
-
----
-
-## 🚀 快速运行
-
-### 方式一：个人商家模式（推荐）
-
+### Run
 ```bash
-# 启动商家管理后台
+# Start merchant management dashboard
 python -m streamlit run app_admin.py --server.port 8501
 
-# 启动买家咨询页面（另一终端）
+# Start buyer consultation page (in another terminal)
 python -m streamlit run app_buyer.py --server.port 8502
-```
 
-**使用流程**：
-1. 打开 http://localhost:8501 创建商家和商品
-2. 上传知识库文件（使用 `assets/示例知识库_常见问题.txt` 测试）
-3. 在【咨询链接】获取买家咨询链接
-4. 买家通过链接访问 http://localhost:8502 进行咨询
-
-### 方式二：API 接口模式
-
-```bash
-# 启动 API 服务
+# Start API service (optional)
 python api_server.py
-
-# 接口文档地址：http://localhost:8000/docs
-```
-
-### 方式三：原有单知识库模式
-
-```bash
-# 启动知识库上传服务
-streamlit run app_upload.py
-
-# 启动智能客服
-streamlit run app_chat.py
 ```
 
 ---
 
-## 🔗 多平台对接
+## 🔗 Integration with E-commerce Platforms
 
-### 淘宝/天猫
-- 在商品详情页添加咨询链接二维码
-- 买家扫码即可咨询商品相关问题
+### Taobao/Tmall
+- Add consultation QR code in product detail page
+- Buyers scan to consult about product questions
 
-### 抖音/拼多多
-- 在商品描述中添加咨询链接
-- 或在直播间引导买家访问咨询页面
+### Douyin/Pinduoduo
+- Add consultation link in product description
+- Guide buyers to consultation page during live streams
 
-### 微信
-- 将咨询链接生成二维码，放在朋友圈或公众号文章中
+### WeChat
+- Generate QR code for consultation link
+- Place in Moments or official account articles
 
 ---
 
-## 📝 使用示例
+## 📝 Usage Example
 
-### 知识库文件格式
+### Knowledge Base File Format
 ```text
-Q: 这件衣服会起球吗？
-A: 不会，面料经过抗起球处理，正常穿着不易起球。
+Q: Will this clothing pill?
+A: No, the fabric has been treated with anti-pilling technology.
 
-Q: 身高170体重130穿什么码？
-A: 建议 L 码，宽松版型可选 XL。
+Q: What size for height 170cm and weight 65kg?
+A: Recommend size L, or XL for loose fit.
 
-Q: 多久发货？
-A: 工作日 48 小时内发货，节假日顺延。
+Q: When will you ship?
+A: Ship within 48 hours on workdays.
 
-Q: 不喜欢可以退吗？
-A: 支持 7 天无理由退换，需保持商品完好。
+Q: Can I return if I don't like it?
+A: 7-day return policy, keep product intact.
 ```
 
-### 测试问答
-| 提问 | 预期回答 |
-|------|----------|
-| 这件衣服会起球吗？ | 不会，面料经过抗起球处理... |
-| 身高170体重130穿什么码？ | 建议 L 码... |
-| 多久发货？ | 工作日 48 小时内发货... |
-| 不喜欢可以退吗？ | 支持 7 天无理由退换... |
+### Test Questions
+| Question | Expected Answer |
+|----------|-----------------|
+| Will this clothing pill? | No, the fabric has been treated... |
+| What size for height 170cm? | Recommend size L... |
+| When will you ship? | Within 48 hours on workdays... |
+| Can I return? | 7-day return policy... |
 
 ---
 
-## 🛠 常见问题
+## 🛠 Configuration Options
 
-### Q1：上传文件后，聊天问答仍然像"没有检索到资料"？
-#### 可能原因：
-- 上传服务和问答服务使用了不同的向量库持久化目录
-- `collection_name` 配置不一致
-- 上传文件后未正确写入本地数据目录
-
-### Q2：上传文件后，回答显示较慢或没有正常输出？
-#### 可能原因：
-- 文本切分参数或检索参数设置不合适，调整 chunk、检索 k 值
-- 模型接口或网络请求响应较慢
-- 本地向量库未正确初始化
-
-### Q3：买家咨询页面显示"链接无效"？
-#### 可能原因：
-- 链接缺少 `merchant` 参数
-- 商家 ID 不存在或已被删除
-- 确保从商家管理后台的【咨询链接】标签页获取完整链接
-
-### Q4：项目运行报路径或配置错误怎么办？
-#### 建议优先检查：
-- `config_data.py` 中的模型配置、路径配置是否正确
-- 本地数据目录是否存在
-- API Key 是否已配置到环境变量
+| Option | Default | Description |
+|--------|---------|-------------|
+| base_url | http://localhost:8501 | Merchant dashboard address |
+| buyer_base_url | http://localhost:8502 | Buyer consultation address |
+| chunk_size | 1000 | Text splitting size |
+| chunk_overlap | 100 | Overlap between chunks |
+| similarity_threshold | 1 | Number of retrieved documents |
+| embedding_model_name | text-embedding-v4 | Embedding model |
+| chat_model_name | qwen3-max | Chat model |
 
 ---
 
-## ✨ 优化方向（仅供参考）
+## 🔧 Troubleshooting
 
-- **增加深度 Rerank**：提升检索结果质量，如 LangChain 的 EGE rerank 模块
-- **支持更多文件类型**：PDF / Markdown / Word，增加 LangChain 插件即可实现
-- **多模型混合**：单模型 -> 多模型，如豆包的多层推理架构
-- **Chroma -> FAISS**：轻量 Chroma 适合个人复现，FAISS 的高效检索适配企业
-- **实时数据同步**：对接电商平台 API，自动同步商品信息
-- **对话记忆优化**：更智能的上下文理解和记忆管理
+### Q1: Chat doesn't find relevant information after uploading files?
+Check:
+- Vector database directory consistency between upload and chat services
+- Collection name configuration
+- Data directory existence
+
+### Q2: Slow response or no output?
+Check:
+- Text splitting parameters (chunk_size, chunk_overlap)
+- API network connectivity
+- Vector database initialization
+
+### Q3: "Invalid link" on buyer page?
+Check:
+- Missing merchant parameter in URL
+- Merchant ID exists and not deleted
+- Get complete link from dashboard's "Consultation Links" tab
+
+---
+
+## ✨ Future Enhancements
+
+- **Advanced Rerank**: Improve retrieval quality with LangChain EGE rerank
+- **More File Types**: PDF, Markdown, Word support
+- **Multi-model Support**: Mix of different LLMs
+- **FAISS Integration**: Replace Chroma with FAISS for enterprise-scale
+- **Real-time Sync**: Auto-sync product info from e-commerce platforms
+- **Conversation Memory**: Enhanced context understanding
 
 ---
 
 ## 📄 License
 
-本项目仅用于学习与交流，如需商用请自行补全安全、合规与授权相关内容。
+MIT License
 
 ---
 
-## 🙌 致谢
+## 🙌 Acknowledgments
 
-- Black Horse
 - Streamlit
 - LangChain
-- Chroma / chromadb
-- Aliyun Bai / qwen
+- ChromaDB
+- Alibaba Cloud DashScope
